@@ -15,7 +15,7 @@ w = observation.weather
 # print("Sunrise: ", w.sunrise_time(timeformat='iso'))
 # print("Sunset: ", w.sunset_time(timeformat='date'))
 print("Current status: ", w.detailed_status)         # 'clouds'
-w.wind()                  # {'speed': 4.6, 'deg': 330}
+print("Wind gust: ", w.wind()['gust'])                  # {'speed': 4.6, 'deg': 330}
 w.humidity                # 87
 print("Feels like: ", w.temperature('fahrenheit')['feels_like'])  # {'temp_max': 10.5, 'temp': 9.7, 'temp_min': 9.0}
 #print(w.rain)                    # {}
