@@ -55,13 +55,19 @@ def get_weather(lat = None, lon = None, start_date = None, end_date = None):
 	daily_wind_gusts_10m_max = daily.Variables(5).ValuesAsNumpy()
 	daily_wind_speed_10m_max = daily.Variables(6).ValuesAsNumpy()
 	daily_wind_direction_10m_dominant = daily.Variables(7).ValuesAsNumpy()
+	daily_times = daily.Time()
 
-	daily_data = {"date": pd.date_range(
-		start = pd.to_datetime(daily.Time(), unit = "s", utc = True),
-		end =  pd.to_datetime(daily.TimeEnd(), unit = "s", utc = True),
-		freq = pd.Timedelta(days = daily.Interval()),
-		inclusive = "left"
-	)}
+	daily_data = pd.DataFrame({
+    	"date": pd.to_datetime(daily_times, unit="s", utc=True),
+    	"sunrise": pd.to_datetime(daily_sunrise, unit="s", utc=True),
+    	"sunset": pd.to_datetime(daily_sunset, unit="s", utc=True),
+	})
+	# daily_data = {"date": pd.date_range(
+	# 	start = pd.to_datetime(daily.Time(), unit = "s", utc = True),
+	# 	end =  pd.to_datetime(daily.TimeEnd(), unit = "s", utc = True),
+	# 	freq = pd.Timedelta(days = daily.Interval()),
+	# 	inclusive = "left"
+	# )}
 	daily_data["precipitation_sum"] = daily_precipitation_sum
 	daily_data["temperature_2m_max"] = daily_temperature_2m_max
 	daily_data["temperature_2m_min"] = daily_temperature_2m_min
@@ -71,6 +77,9 @@ def get_weather(lat = None, lon = None, start_date = None, end_date = None):
 	daily_data["wind_gusts_10m_max"] = daily_wind_gusts_10m_max
 	daily_data["wind_speed_10m_max"] = daily_wind_speed_10m_max
 	daily_data["wind_direction_10m_dominant"] = daily_wind_direction_10m_dominant
+	print("len(date):", len(daily_data["date"]))
+	print("len(sunrise):", len(daily_sunrise))
+	print("len(sunset):", len(daily_sunset))
 	daily_dataframe = pd.DataFrame(data = daily_data)
 
 	# Process hourly data. The order of variables needs to be the same as requested.
