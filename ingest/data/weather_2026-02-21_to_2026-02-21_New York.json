@@ -15,7 +15,11 @@
     "wind_direction_10m":249.1454620361,
     "soil_temperature_0_to_7cm":33.2599983215,
     "soil_moisture_0_to_7cm":0.3729999959,
-    "sunshine_duration":0.0
+    "sunshine_duration":0.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T06:00:00.000Z",
@@ -33,7 +37,11 @@
     "wind_direction_10m":232.853225708,
     "soil_temperature_0_to_7cm":33.1699981689,
     "soil_moisture_0_to_7cm":0.3700000048,
-    "sunshine_duration":0.0
+    "sunshine_duration":0.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T07:00:00.000Z",
@@ -51,7 +59,11 @@
     "wind_direction_10m":312.3973693848,
     "soil_temperature_0_to_7cm":33.0800018311,
     "soil_moisture_0_to_7cm":0.3680000007,
-    "sunshine_duration":0.0
+    "sunshine_duration":0.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T08:00:00.000Z",
@@ -69,7 +81,11 @@
     "wind_direction_10m":351.25390625,
     "soil_temperature_0_to_7cm":33.0800018311,
     "soil_moisture_0_to_7cm":0.3659999967,
-    "sunshine_duration":0.0
+    "sunshine_duration":0.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T09:00:00.000Z",
@@ -87,7 +103,11 @@
     "wind_direction_10m":312.2736206055,
     "soil_temperature_0_to_7cm":33.0800018311,
     "soil_moisture_0_to_7cm":0.3639999926,
-    "sunshine_duration":0.0
+    "sunshine_duration":0.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T10:00:00.000Z",
@@ -105,7 +125,11 @@
     "wind_direction_10m":266.4237365723,
     "soil_temperature_0_to_7cm":32.9000015259,
     "soil_moisture_0_to_7cm":0.3619999886,
-    "sunshine_duration":0.0
+    "sunshine_duration":0.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T11:00:00.000Z",
@@ -123,7 +147,11 @@
     "wind_direction_10m":264.9204711914,
     "soil_temperature_0_to_7cm":32.8100013733,
     "soil_moisture_0_to_7cm":0.3600000143,
-    "sunshine_duration":0.0
+    "sunshine_duration":0.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T12:00:00.000Z",
@@ -141,7 +169,11 @@
     "wind_direction_10m":271.1934509277,
     "soil_temperature_0_to_7cm":32.6300010681,
     "soil_moisture_0_to_7cm":0.3580000103,
-    "sunshine_duration":0.0
+    "sunshine_duration":0.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T13:00:00.000Z",
@@ -159,7 +191,11 @@
     "wind_direction_10m":271.0230102539,
     "soil_temperature_0_to_7cm":32.6300010681,
     "soil_moisture_0_to_7cm":0.3569999933,
-    "sunshine_duration":3056.6970214844
+    "sunshine_duration":3056.6970214844,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T14:00:00.000Z",
@@ -177,7 +213,11 @@
     "wind_direction_10m":252.8013763428,
     "soil_temperature_0_to_7cm":32.9900016785,
     "soil_moisture_0_to_7cm":0.3560000062,
-    "sunshine_duration":3600.0
+    "sunshine_duration":3600.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T15:00:00.000Z",
@@ -195,7 +235,11 @@
     "wind_direction_10m":254.0545349121,
     "soil_temperature_0_to_7cm":33.6199989319,
     "soil_moisture_0_to_7cm":0.3600000143,
-    "sunshine_duration":3600.0
+    "sunshine_duration":3600.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T16:00:00.000Z",
@@ -213,7 +257,11 @@
     "wind_direction_10m":299.6382751465,
     "soil_temperature_0_to_7cm":37.0400009155,
     "soil_moisture_0_to_7cm":0.3630000055,
-    "sunshine_duration":3600.0
+    "sunshine_duration":3600.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T17:00:00.000Z",
@@ -231,7 +279,11 @@
     "wind_direction_10m":320.8263549805,
     "soil_temperature_0_to_7cm":39.5600013733,
     "soil_moisture_0_to_7cm":0.3670000136,
-    "sunshine_duration":3600.0
+    "sunshine_duration":3600.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T18:00:00.000Z",
@@ -249,7 +301,11 @@
     "wind_direction_10m":309.8055114746,
     "soil_temperature_0_to_7cm":41.0,
     "soil_moisture_0_to_7cm":0.3689999878,
-    "sunshine_duration":2630.7604980469
+    "sunshine_duration":2630.7604980469,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T19:00:00.000Z",
@@ -267,7 +323,11 @@
     "wind_direction_10m":310.5027770996,
     "soil_temperature_0_to_7cm":41.9899978638,
     "soil_moisture_0_to_7cm":0.3700000048,
-    "sunshine_duration":3600.0
+    "sunshine_duration":3600.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T20:00:00.000Z",
@@ -285,7 +345,11 @@
     "wind_direction_10m":308.107635498,
     "soil_temperature_0_to_7cm":42.1699981689,
     "soil_moisture_0_to_7cm":0.3700000048,
-    "sunshine_duration":1131.7263183594
+    "sunshine_duration":1131.7263183594,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T21:00:00.000Z",
@@ -303,7 +367,11 @@
     "wind_direction_10m":309.6441345215,
     "soil_temperature_0_to_7cm":41.9000015259,
     "soil_moisture_0_to_7cm":0.3700000048,
-    "sunshine_duration":2032.8155517578
+    "sunshine_duration":2032.8155517578,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T22:00:00.000Z",
@@ -321,7 +389,11 @@
     "wind_direction_10m":304.2157592773,
     "soil_temperature_0_to_7cm":41.0900001526,
     "soil_moisture_0_to_7cm":0.3680000007,
-    "sunshine_duration":3600.0
+    "sunshine_duration":3600.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-21T23:00:00.000Z",
@@ -339,7 +411,11 @@
     "wind_direction_10m":313.1524047852,
     "soil_temperature_0_to_7cm":39.0200004578,
     "soil_moisture_0_to_7cm":0.3659999967,
-    "sunshine_duration":37.6156845093
+    "sunshine_duration":37.6156845093,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-22T00:00:00.000Z",
@@ -357,7 +433,11 @@
     "wind_direction_10m":2.290563345,
     "soil_temperature_0_to_7cm":37.5800018311,
     "soil_moisture_0_to_7cm":0.3650000095,
-    "sunshine_duration":0.0
+    "sunshine_duration":0.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-22T01:00:00.000Z",
@@ -375,7 +455,11 @@
     "wind_direction_10m":32.005355835,
     "soil_temperature_0_to_7cm":36.5900001526,
     "soil_moisture_0_to_7cm":0.3630000055,
-    "sunshine_duration":0.0
+    "sunshine_duration":0.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-22T02:00:00.000Z",
@@ -393,7 +477,11 @@
     "wind_direction_10m":44.9998970032,
     "soil_temperature_0_to_7cm":35.7799987793,
     "soil_moisture_0_to_7cm":0.3610000014,
-    "sunshine_duration":0.0
+    "sunshine_duration":0.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-22T03:00:00.000Z",
@@ -411,7 +499,11 @@
     "wind_direction_10m":31.6074542999,
     "soil_temperature_0_to_7cm":35.0600013733,
     "soil_moisture_0_to_7cm":0.3600000143,
-    "sunshine_duration":0.0
+    "sunshine_duration":0.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   },
   {
     "date":"2026-02-22T04:00:00.000Z",
@@ -429,6 +521,10 @@
     "wind_direction_10m":24.4439525604,
     "soil_temperature_0_to_7cm":34.6100006104,
     "soil_moisture_0_to_7cm":0.3580000103,
-    "sunshine_duration":0.0
+    "sunshine_duration":0.0,
+    "city":"New York",
+    "latitude":40.71427,
+    "longitude":-74.00597,
+    "timezone":"America\/New_York"
   }
 ]

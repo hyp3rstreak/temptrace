@@ -15,40 +15,20 @@ def main():
     end_date = input("Enter the end date (YYYY-MM-DD) - blank for today: ")
     if end_date == "":
         end_date = None
+
     geocoded_city = geocode_city(city)
-    #print(f"Geocoded city: {geocoded_city}")
-    print(f"Fetching weather data for {geocoded_city['name']} from {start_date} to {end_date}...")
-    result = get_weather(geocoded_city["latitude"], geocoded_city["longitude"], start_date, end_date)
 
-    # Support flexible return shapes from get_weather():
-    # - DataFrame
-    # - (DataFrame, start_date)
-    # - (DataFrame, start_date, end_date)
-    if isinstance(result, tuple):
-        if len(result) == 3:
-            df, real_start_date, real_end_date = result
-        elif len(result) == 2:
-            df, real_start_date = result
-            real_end_date = real_start_date
-        elif len(result) == 1:
-            df = result[0]
-            real_start_date = start_date or now
-            real_end_date = end_date or real_start_date
-        else:
-            df = result[0]
-            real_start_date = start_date or now
-            real_end_date = end_date or real_start_date
-    else:
-        df = result
-        real_start_date = start_date or now
-        real_end_date = end_date or real_start_date
-    try:
-        print(df.head())
-        print(df.tail())
-    except Exception:
-        print("Fetched data (non-tabular or empty).")
+    df, real_start_date, real_end_date = get_weather(geocoded_city["latitude"], geocoded_city["longitude"], start_date, end_date)
+    
+    print(f"Fetching weather data for {geocoded_city['name']} from {real_start_date} to {real_end_date}...")
 
-    df.to_json(f"ingest/data/weather_data_{real_start_date}_to_{real_end_date}.json", orient = "records", date_format = "iso", indent=2)
+    df['city'] = geocoded_city['name']
+    df['latitude'] = geocoded_city['latitude']
+    df['longitude'] = geocoded_city['longitude']
+    df['timezone'] = geocoded_city['timezone']
 
+    df.to_json(f"ingest/data/weather_{real_start_date}_to_{real_end_date}_{geocoded_city['name']}.json", orient = "records", date_format = "iso", indent=2)
+    print(f"Weather data saved to ingest/data/weather_{real_start_date}_to_{real_end_date}_{geocoded_city['name']}.json")
+    
 if __name__ == "__main__":
 	main()
