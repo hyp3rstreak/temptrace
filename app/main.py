@@ -1,3 +1,5 @@
+from database.insert import insert_weather_data
+from database.transform_db import transform_weather_data
 from ingest.geocode import geocode_city
 from ingest.fetch import get_weather
 from datetime import datetime
@@ -18,17 +20,22 @@ def main():
 
     geocoded_city = geocode_city(city)
 
-    df, real_start_date, real_end_date = get_weather(geocoded_city["latitude"], geocoded_city["longitude"], start_date, end_date)
+    df_hourly, df_daily, real_start_date, real_end_date = get_weather(geocoded_city["latitude"], geocoded_city["longitude"], start_date, end_date)
     
     print(f"Fetching weather data for {geocoded_city['name']} from {real_start_date} to {real_end_date}...")
 
-    df['city'] = geocoded_city['name']
-    df['latitude'] = geocoded_city['latitude']
-    df['longitude'] = geocoded_city['longitude']
-    df['timezone'] = geocoded_city['timezone']
+    df_hourly['city'] = geocoded_city['name']
+    df_hourly['latitude'] = geocoded_city['latitude']
+    df_hourly['longitude'] = geocoded_city['longitude']
+    df_hourly['timezone'] = geocoded_city['timezone']
 
-    df.to_json(f"ingest/data/weather_{real_start_date}_to_{real_end_date}_{geocoded_city['name']}.json", orient = "records", date_format = "iso", indent=2)
-    print(f"Weather data saved to ingest/data/weather_{real_start_date}_to_{real_end_date}_{geocoded_city['name']}.json")
+    location_row, weather_hourly_rows, weather_daily_rows = transform_weather_data(df_hourly, df_daily, geocoded_city)
+
+    insert_weather_data(location_row, weather_hourly_rows, weather_daily_rows)
+    
+
+    # df_hourly.to_json(f"ingest/data/hourly_{real_start_date}_to_{real_end_date}_{geocoded_city['name']}.json", orient = "records", date_format = "iso", indent=2)
+    # print(f"Hourly data saved to ingest/data/hourly_{real_start_date}_to_{real_end_date}_{geocoded_city['name']}.json")
     
 if __name__ == "__main__":
 	main()

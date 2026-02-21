@@ -7,49 +7,6 @@ import psycopg2
 from psycopg2.extras import execute_values
 from datetime import datetime
 
-# def transform_postgres(weather_df):
-# 	locations_rows = []
-	
-# 	for _, row in weather_df.iterrows():
-# 		bool_day = (row['is_day'] == 1)
-# 		weather_current_rows.append((
-
-# 			row['date'],
-# 			row['temperature_2m'],
-# 			row['apparent_temperature'],
-# 			row['rain'],
-# 			row['snowfall'],
-# 			row['snow_depth'],
-# 			row['surface_pressure'],
-# 			row['cloud_cover'],
-# 			row['wind_speed_10m'],
-# 			row['wind_gusts_10m'],
-# 			row['wind_direction_10m'],
-# 			row['soil_temperature_0_to_7cm'],
-# 			row['soil_moisture_0_to_7cm'],
-# 			row['sunshine_duration']
-# 		))
-# 	weather_rows = []
-# 	for _, row in weather_df.iterrows():
-# 		weather_rows.append((
-# 			row['date'],
-# 			row['temperature_2m'],
-# 			row['relative_humidity_2m'],
-# 			row['dew_point_2m'],
-# 			row['apparent_temperature'],
-# 			row['rain'],
-# 			row['snowfall'],
-# 			row['snow_depth'],
-# 			row['surface_pressure'],
-# 			row['cloud_cover'],
-# 			row['wind_speed_10m'],
-# 			row['wind_gusts_10m'],
-# 			row['wind_direction_10m'],
-# 			row['soil_temperature_0_to_7cm'],
-# 			row['soil_moisture_0_to_7cm'],
-# 			row['sunshine_duration']
-# 		))
-# 	return weather_rows
 
 def get_weather(lat = None, lon = None, start_date = None, end_date = None):
 	now = datetime.now().strftime("%Y-%m-%d")
@@ -75,7 +32,8 @@ def get_weather(lat = None, lon = None, start_date = None, end_date = None):
 		"longitude": lon,#-81.19,
 		"start_date": start_date,
 		"end_date": end_date,
-		"hourly": ["temperature_2m", "relative_humidity_2m", "dew_point_2m", "apparent_temperature", "rain", "snowfall", "snow_depth", "surface_pressure", "cloud_cover", "wind_speed_10m", "wind_gusts_10m", "wind_direction_10m", "soil_temperature_0_to_7cm", "soil_moisture_0_to_7cm", "sunshine_duration"],
+		"hourly": ["temperature_2m", "relative_humidity_2m", "dew_point_2m", "apparent_temperature", "rain", "snowfall", "snow_depth", "surface_pressure", "cloud_cover", "wind_speed_10m", "wind_gusts_10m", "wind_direction_10m", "soil_temperature_0_to_7cm", "soil_moisture_0_to_7cm"],
+		"daily": ["precipitation_sum", "temperature_2m_max", "temperature_2m_min", "sunrise", "sunset", "wind_gusts_10m_max", "wind_speed_10m_max", "wind_direction_10m_dominant"],
 		"timezone": "America/New_York",
 		"temperature_unit": "fahrenheit",
 		"wind_speed_unit": "mph",
@@ -88,6 +46,32 @@ def get_weather(lat = None, lon = None, start_date = None, end_date = None):
 	# print(f"Coordinates: {response.Latitude()}°N {response.Longitude()}°E")
 	# print(f"Elevation: {response.Elevation()} m asl")
 	# print(f"Timezone difference to GMT+0: {response.UtcOffsetSeconds()}s")
+	daily = response.Daily()
+	daily_precipitation_sum = daily.Variables(0).ValuesAsNumpy()
+	daily_temperature_2m_max = daily.Variables(1).ValuesAsNumpy()
+	daily_temperature_2m_min = daily.Variables(2).ValuesAsNumpy()
+	daily_sunrise = daily.Variables(3).ValuesInt64AsNumpy()
+	daily_sunset = daily.Variables(4).ValuesInt64AsNumpy()
+	daily_wind_gusts_10m_max = daily.Variables(5).ValuesAsNumpy()
+	daily_wind_speed_10m_max = daily.Variables(6).ValuesAsNumpy()
+	daily_wind_direction_10m_dominant = daily.Variables(7).ValuesAsNumpy()
+
+	daily_data = {"date": pd.date_range(
+		start = pd.to_datetime(daily.Time(), unit = "s", utc = True),
+		end =  pd.to_datetime(daily.TimeEnd(), unit = "s", utc = True),
+		freq = pd.Timedelta(days = daily.Interval()),
+		inclusive = "left"
+	)}
+	daily_data["precipitation_sum"] = daily_precipitation_sum
+	daily_data["temperature_2m_max"] = daily_temperature_2m_max
+	daily_data["temperature_2m_min"] = daily_temperature_2m_min
+	daily_data["sunrise"] = daily_sunrise
+	daily_data["sunset"] = daily_sunset
+	print(daily_sunrise, " !!!!! ", daily_sunset)
+	daily_data["wind_gusts_10m_max"] = daily_wind_gusts_10m_max
+	daily_data["wind_speed_10m_max"] = daily_wind_speed_10m_max
+	daily_data["wind_direction_10m_dominant"] = daily_wind_direction_10m_dominant
+	daily_dataframe = pd.DataFrame(data = daily_data)
 
 	# Process hourly data. The order of variables needs to be the same as requested.
 	hourly = response.Hourly()
@@ -105,7 +89,6 @@ def get_weather(lat = None, lon = None, start_date = None, end_date = None):
 	hourly_wind_direction_10m = hourly.Variables(11).ValuesAsNumpy()
 	hourly_soil_temperature_0_to_7cm = hourly.Variables(12).ValuesAsNumpy()
 	hourly_soil_moisture_0_to_7cm = hourly.Variables(13).ValuesAsNumpy()
-	hourly_sunshine_duration = hourly.Variables(14).ValuesAsNumpy()
 
 	hourly_data = {"date": pd.date_range(
 		start = pd.to_datetime(hourly.Time(), unit = "s", utc = True),
@@ -128,11 +111,10 @@ def get_weather(lat = None, lon = None, start_date = None, end_date = None):
 	hourly_data["wind_direction_10m"] = hourly_wind_direction_10m
 	hourly_data["soil_temperature_0_to_7cm"] = hourly_soil_temperature_0_to_7cm
 	hourly_data["soil_moisture_0_to_7cm"] = hourly_soil_moisture_0_to_7cm
-	hourly_data["sunshine_duration"] = hourly_sunshine_duration
 
 	hourly_dataframe = pd.DataFrame(data = hourly_data)
 
-	return hourly_dataframe, start_date, end_date
+	return hourly_dataframe, daily_dataframe, start_date, end_date
 
 
 
