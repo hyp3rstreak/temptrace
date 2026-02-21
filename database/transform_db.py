@@ -46,7 +46,8 @@ def transform_weather_data(df_hourly, df_daily, geocoded_city):
         geocoded_city['name'],
         geocoded_city['latitude'],
         geocoded_city['longitude'],
-        geocoded_city['timezone']
+        geocoded_city['timezone'],
+        geocoded_city['typed_name']
     )
 
     return location_row, weather_hourly_rows, weather_daily_rows

@@ -17,6 +17,7 @@ def geocode_city(city_name = "New York City"):
     result = data["results"][0]
     
     return {
+        "typed_name": city_name,
         "name": result["name"],
         "latitude": result["latitude"],
         "longitude": result["longitude"],

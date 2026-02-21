@@ -11,16 +11,16 @@ def dbcon():
     )
 
 def insert_weather_data(location_row, weather_hourly_rows, weather_daily_rows):
-    print(type(location_row))
-    print("location_rows:", location_row)
-    print("length:", len(location_row))
+    # print(type(location_row))
+    # print("location_rows:", location_row)
+    # print("length:", len(location_row))
     with dbcon() as conn:
         with conn.cursor() as cur:
 
             # 1. Upsert location
             cur.execute("""
-                INSERT INTO locations (name, latitude, longitude, timezone)
-                VALUES (%s, %s, %s, %s)
+                INSERT INTO locations (name, latitude, longitude, timezone, typed_name)
+                VALUES (%s, %s, %s, %s, %s)
                 ON CONFLICT (latitude, longitude)
                 DO UPDATE SET
                     latitude = EXCLUDED.latitude,
@@ -41,7 +41,26 @@ def insert_weather_data(location_row, weather_hourly_rows, weather_daily_rows):
                 (location_id, *row)
                 for row in weather_daily_rows
             ]
-            print("weather_hourly_rows sample:", weather_hourly_rows[0])
+            # Deduplicate rows that would share the same conflict key within
+            # the same batch. PostgreSQL errors if an INSERT ... ON CONFLICT
+            # would try to update the same target row more than once in a
+            # single statement. Use the last-seen row for each key.
+            if weather_hourly_rows:
+                seen = {}
+                for r in weather_hourly_rows:
+                    # key = (location_id, observation_time)
+                    key = (r[0], r[1])
+                    seen[key] = r
+                weather_hourly_rows = list(seen.values())
+
+            if weather_daily_rows:
+                seen = {}
+                for r in weather_daily_rows:
+                    # key = (location_id, date)
+                    key = (r[0], r[1])
+                    seen[key] = r
+                weather_daily_rows = list(seen.values())
+            #print("weather_hourly_rows sample:", weather_hourly_rows[0])
             # 3. Insert hourly
             execute_values(
                 cur,

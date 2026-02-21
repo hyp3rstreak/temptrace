@@ -73,13 +73,13 @@ def get_weather(lat = None, lon = None, start_date = None, end_date = None):
 	daily_data["temperature_2m_min"] = daily_temperature_2m_min
 	daily_data["sunrise"] = daily_sunrise
 	daily_data["sunset"] = daily_sunset
-	print(daily_sunrise, " !!!!! ", daily_sunset)
+	# print(daily_sunrise, " !!!!! ", daily_sunset)
 	daily_data["wind_gusts_10m_max"] = daily_wind_gusts_10m_max
 	daily_data["wind_speed_10m_max"] = daily_wind_speed_10m_max
 	daily_data["wind_direction_10m_dominant"] = daily_wind_direction_10m_dominant
-	print("len(date):", len(daily_data["date"]))
-	print("len(sunrise):", len(daily_sunrise))
-	print("len(sunset):", len(daily_sunset))
+	# print("len(date):", len(daily_data["date"]))
+	# print("len(sunrise):", len(daily_sunrise))
+	# print("len(sunset):", len(daily_sunset))
 	daily_dataframe = pd.DataFrame(data = daily_data)
 
 	# Process hourly data. The order of variables needs to be the same as requested.
