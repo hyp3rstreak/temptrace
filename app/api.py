@@ -1,13 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 import requests
 
 app = FastAPI()
 
-
 @app.get("/current")
 def current_weather(city: str):
 
-    # 1. Geocode city
     geo_url = "https://geocoding-api.open-meteo.com/v1/search"
     geo_response = requests.get(
         geo_url,
@@ -15,11 +13,10 @@ def current_weather(city: str):
     ).json()
 
     if "results" not in geo_response:
-        return {"error": "City not found"}
+        raise HTTPException(status_code=404, detail="City not found")
 
     location = geo_response["results"][0]
 
-    # 2. Fetch current weather
     forecast_url = "https://api.open-meteo.com/v1/forecast"
     weather_response = requests.get(
         forecast_url,
@@ -31,7 +28,7 @@ def current_weather(city: str):
             "wind_speed_unit": "mph"
         }
     ).json()
-    print(weather_response)
+
     current = weather_response["current_weather"]
 
     return {
