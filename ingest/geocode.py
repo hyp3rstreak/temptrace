@@ -50,7 +50,7 @@ def geocode_city(city_name = "New York City"):
     
     # Use the first result returned by the API (most relevant match).
     result = data["results"][0]
-    
+
     # Return a compact dictionary with both the original typed name and the
     # canonical fields the rest of the application expects.
     return {
@@ -58,5 +58,9 @@ def geocode_city(city_name = "New York City"):
         "name": result["name"],
         "latitude": result["latitude"],
         "longitude": result["longitude"],
-        "timezone": result["timezone"]
+        "timezone": result["timezone"],
+        "elevation": result["elevation"],
+        "population": result["population"],
+        "country": result["country"],
+        "state": result["admin1"]
     }

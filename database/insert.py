@@ -49,19 +49,23 @@ def insert_weather_data(location_row, weather_hourly_rows, weather_daily_rows):
     4. Use `execute_values` to perform efficient bulk INSERT ... ON CONFLICT
        upserts for both `weather_hourly` and `weather_daily` tables.
     """
-
     with dbcon() as conn:
         with conn.cursor() as cur:
 
             # 1. Upsert location and get its surrogate id.
             cur.execute("""
-                INSERT INTO locations (name, latitude, longitude, timezone, typed_name)
-                VALUES (%s, %s, %s, %s, %s)
+                INSERT INTO locations (name, latitude, longitude, timezone, typed_name, population, elevation, country, state)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                 ON CONFLICT (latitude, longitude)
                 DO UPDATE SET
                     latitude = EXCLUDED.latitude,
                     longitude = EXCLUDED.longitude,
-                    timezone = EXCLUDED.timezone
+                    timezone = EXCLUDED.timezone,
+                    typed_name = EXCLUDED.typed_name,
+                    population = EXCLUDED.population,
+                    elevation = EXCLUDED.elevation,
+                    country = EXCLUDED.country,
+                    state = EXCLUDED.state
                 RETURNING id
             """, location_row)
 

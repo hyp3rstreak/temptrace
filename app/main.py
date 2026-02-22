@@ -96,7 +96,7 @@ def main():
     output at the end.
     """
     # Prompt user for city/date range; blank values indicate defaults.
-    city = input("Enter a city name to fetch weather data - blank for default (NYC): ").strip()
+    city = input("Enter zip/city to fetch weather data - blank for default (NYC): ").strip()
     if city == "":
         city = None
     start_date = input("Enter the start date (YYYY-MM-DD) - blank for today: ")
