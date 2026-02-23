@@ -50,6 +50,15 @@ weather_code_map = {
     99: "Thunderstorm with heavy hail"
 }
 
+def deg_to_compass(deg):
+    try:
+        d = float(deg)
+    except (TypeError, ValueError):
+        return None
+    directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
+    idx = int((d / 45.0) + 0.5) % 8
+    return directions[idx]
+
 @app.get("/current")
 def current_weather(city: str):
     # Let resolve_city raise HTTPException for not-found or internal errors
@@ -139,22 +148,22 @@ def forecast(city: str):
             "sunrise": at("sunrise"),
             "sunset": at("sunset"),
             "uv_index_max": at("uv_index_max"),
-            "precipitation_sum": at("precipitation_sum"),
-            "precipitation_probability_max": at("precipitation_probability_max"),
+            "precipitation_sum": round(at("precipitation_sum"),2),
+            "precipitation_probability_max": round(at("precipitation_probability_max"),2),
             "precipitation_hours": at("precipitation_hours"),
             "snowfall_sum": at("snowfall_sum"),
             "showers_sum": at("showers_sum"),
             "rain_sum": at("rain_sum"),
             "wind_speed_max": at("wind_speed_10m_max"),
             "wind_gusts_max": at("wind_gusts_10m_max"),
-            "wind_direction": at("wind_direction_10m_dominant"),
+            "wind_direction": deg_to_compass(at("wind_direction_10m_dominant")),
             "shortwave_radiation_sum": at("shortwave_radiation_sum"),
             "evapotranspiration": at("et0_fao_evapotranspiration"),
             "daylight_duration": at("daylight_duration"),
             "sunshine_duration": at("sunshine_duration"),
             "uv_index_clear_sky_max": at("uv_index_clear_sky_max"),
-            "feels_like_max": at("apparent_temperature_max"),
-            "feels_like_min": at("apparent_temperature_min")                                                              
+            "feels_like_max": round(at("apparent_temperature_max"),2),
+            "feels_like_min": round(at("apparent_temperature_min"),2)                                                              
         })
 
     return {
