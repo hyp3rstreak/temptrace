@@ -4,6 +4,52 @@ from ingest.geocode import geocode_city
 
 app = FastAPI()
 
+# Code	Description
+# 0	Clear sky
+# 1, 2, 3	Mainly clear, partly cloudy, and overcast
+# 45, 48	Fog and depositing rime fog
+# 51, 53, 55	Drizzle: Light, moderate, and dense intensity
+# 56, 57	Freezing Drizzle: Light and dense intensity
+# 61, 63, 65	Rain: Slight, moderate and heavy intensity
+# 66, 67	Freezing Rain: Light and heavy intensity
+# 71, 73, 75	Snow fall: Slight, moderate, and heavy intensity
+# 77	Snow grains
+# 80, 81, 82	Rain showers: Slight, moderate, and violent
+# 85, 86	Snow showers slight and heavy
+# 95 *	Thunderstorm: Slight or moderate
+# 96, 99 *	Thunderstorm with slight and heavy hail
+
+weather_code_map = {
+    0: "Clear sky",
+    1: "Mainly clear",
+    2: "Partly cloudy",
+    3: "Overcast",
+    45: "Fog",
+    48: "Depositing rime fog",
+    51: "Light drizzle:",
+    53: "Moderate drizzle",
+    55: "Dense drizzle",
+    56: "Light Freezing Drizzle",
+    57: "Dense Freezing Drizzle:",
+    61: "Slight Rain",
+    63: "Moderate Rain",
+    65: "Heavy Rain",
+    66: "Light Freezing Rain",
+    67: "Heavy Freezing Rain",
+    71: "Slight Snow fall",
+    73: "Moderate Snow fall",
+    75: "Heavy Snow fall",
+    77: "Snow grains",
+    80: "Slight Rain showers",
+    81: "Moderate Rain showers",
+    82: "Violent Rain showers",
+    85: "Slight Snow showers",  
+    86: "Heavy Snow showers",
+    95: "Slight Thunderstorm",
+    96: "Thunderstorm with slight hail",
+    99: "Thunderstorm with heavy hail"
+}
+
 @app.get("/current")
 def current_weather(city: str):
     # Let resolve_city raise HTTPException for not-found or internal errors
@@ -82,9 +128,12 @@ def forecast(city: str):
             vals = daily.get(key, [])
             return vals[i] if i < len(vals) else None
 
+        # wc = at("weather_code")
+        # weather_desc = weather_code_map.get(wc, "Unknown") if wc is not None else None
+            
         forecast_data.append({
             "date": at("time"),
-            "weather_code": at("weather_code"),
+            "weather_code": weather_code_map.get(at("weather_code"), "Unknown") if at("weather_code") is not None else None,
             "max_temp": at("temperature_2m_max"),
             "min_temp": at("temperature_2m_min"),
             "sunrise": at("sunrise"),
