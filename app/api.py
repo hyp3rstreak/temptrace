@@ -110,7 +110,9 @@ def forecast(city: str):
                 "latitude": location["latitude"],
                 "longitude": location["longitude"],
                 "daily": ["weather_code", "temperature_2m_max", "temperature_2m_min", "sunrise", "sunset", "uv_index_max", "precipitation_sum", "precipitation_probability_max", "precipitation_hours", "snowfall_sum", "showers_sum", "rain_sum", "wind_speed_10m_max", "wind_gusts_10m_max", "wind_direction_10m_dominant", "shortwave_radiation_sum", "et0_fao_evapotranspiration", "daylight_duration", "sunshine_duration", "uv_index_clear_sky_max", "apparent_temperature_max", "apparent_temperature_min"],
+                "wind_speed_unit": "mph",
                 "temperature_unit": "fahrenheit",
+                "precipitation_unit": "inch",
                 "forecast_days": 5,
                 "timezone": "auto"
             },
