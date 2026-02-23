@@ -9,7 +9,7 @@ information (name, latitude, longitude, timezone) returned by the API.
 import requests
 
 
-def geocode_city(city_name = "New York City"):
+def geocode_city(city_name="Beckley"):
     """Geocode a city name to location metadata.
 
     Args:
@@ -22,10 +22,6 @@ def geocode_city(city_name = "New York City"):
     Raises:
         ValueError: If the API response doesn't include a `results` entry.
     """
-
-    # If caller passed None, fall back to the default city name.
-    if city_name is None:
-        city_name = "New York City"
 
     # Build the geocoding API endpoint and request parameters. We ask for
     # a single (most relevant) result by setting count=1.
