@@ -98,7 +98,7 @@ def current_weather(city: str):
     }
 
 @app.get("/forecast")
-def forecast(city: str):
+def forecast(city: str, timezone: str):
     # Let resolve_city raise HTTPException for not-found or internal errors
     location = resolve_city(city)
 
@@ -114,7 +114,7 @@ def forecast(city: str):
                 "temperature_unit": "fahrenheit",
                 "precipitation_unit": "inch",
                 "forecast_days": 5,
-                "timezone": "auto"
+                "timezone": timezone
             },
             timeout=10
         )

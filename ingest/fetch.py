@@ -6,7 +6,7 @@ This module uses `openmeteo_requests` (a client wrapper around the API
 response format) and `requests_cache` plus `retry_requests` to make the
 calls resilient and cache responses locally.
 """
-
+from zoneinfo import ZoneInfo
 import openmeteo_requests
 import json
 import pandas as pd
@@ -16,9 +16,37 @@ import psycopg2
 from psycopg2.extras import execute_values
 from datetime import datetime, timedelta, date
 
-# get_forecast is a helper that defaults to the next 12 hours of forecast data, which is useful for quick testing and debugging. 
-# The main `get_weather` function can be used for more flexible historical queries with optional date ranges.
+def normalize_hourly_dataframe(
+		df: pd.DataFrame,
+		user_timezone: str
+	) -> pd.DataFrame:
+    """
+    Normalize hourly dataframe timestamps for production use.
 
+    - Assumes df["date"] is UTC
+    - Converts to user timezone
+    - Adds canonical time fields
+    """
+
+    # Ensure UTC-aware
+    df["utc_time"] = pd.to_datetime(df["date"], utc=True)
+
+    # Convert to user timezone
+    tz = ZoneInfo(user_timezone)
+    df["local_time"] = df["utc_time"].dt.tz_convert(tz)
+
+    # Derived, app-safe fields
+    df["local_date"] = df["local_time"].dt.date.astype(str)
+    df["local_hour"] = df["local_time"].dt.hour
+    df["timezone"] = user_timezone
+
+    # Stable forecast index (0 = first hour returned)
+    df["forecast_hour_index"] = range(len(df))
+
+    # Optional: drop raw date if you want to enforce discipline
+    # df = df.drop(columns=["date"])
+
+    return df
 
 def get_forecast_hours(lat = None, lon = None, timezone=None, start_date = None, end_date = None, forecast_hours = 12):
 	"""Fetch hourly weather for a single location.
@@ -117,6 +145,17 @@ def get_forecast_hours(lat = None, lon = None, timezone=None, start_date = None,
 	hourly_data["soil_moisture_0_to_7cm"] = hourly_soil_moisture_0_to_7cm
 
 	hourly_dataframe = pd.DataFrame(data = hourly_data)
+
+	# Normalize timestamps for production
+	if timezone is None:
+		timezone = "UTC"  # fallback safety
+
+	hourly_dataframe = normalize_hourly_dataframe(
+		hourly_dataframe,
+		user_timezone=timezone
+	)
+	print(f"timezone: {timezone}")
+	print(f"hourly_dataframe timezone column: {hourly_dataframe['timezone'].iloc[0]}")
 
 	# Return both DataFrames and echo the (possibly defaulted) date range.
 	return hourly_dataframe, None, start_date, end_date

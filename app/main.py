@@ -52,7 +52,7 @@ def run_pipeline(city="Beckley", start_date=None, end_date=None, days_ahead=5, f
     # if user specifies forecast_hours, fetch forecast data instead of historical weather
     if forecast_hours is not None:
         df_hourly, df_daily, real_start_date, real_end_date = get_forecast_hours(
-            geocoded_city["latitude"], geocoded_city["longitude"], timezone=geocoded_city["timezone"], forecast_hours=forecast_hours
+            geocoded_city["latitude"], geocoded_city["longitude"], timezone="America/New_York", forecast_hours=forecast_hours
         )
         if verbose:
             print(f"Fetching weather data for {geocoded_city['name']} for the next {forecast_hours} hours.")
@@ -70,7 +70,7 @@ def run_pipeline(city="Beckley", start_date=None, end_date=None, days_ahead=5, f
         city=geocoded_city["name"],
         latitude=geocoded_city["latitude"],
         longitude=geocoded_city["longitude"],
-        timezone=geocoded_city["timezone"],
+        timezone="America/New_York",
     )
     if verbose:
         print(f"Annotated hourly DataFrame:\n{df_hourly.head()}")
